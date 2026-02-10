@@ -329,7 +329,7 @@ app.layout = dbc.Container([
 @app.callback(
     Output('prediction-output', 'children'),
     Input('predict-button', 'n_clicks'),
-    [State({'type': 'feature-input', 'index': ALL}, 'value')],
+    [State({'type': 'feature-input', 'index': dcc.ALL}, 'value')],
     prevent_initial_call=True
 )
 def make_prediction(n_clicks, input_values):
@@ -370,4 +370,4 @@ def make_prediction(n_clicks, input_values):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=True)

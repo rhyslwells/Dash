@@ -370,4 +370,4 @@ def make_prediction(n_clicks, input_values):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=True)

@@ -2,7 +2,7 @@ import dash
 import dash.html as html
 import dash.dcc as dcc
 import dash_bootstrap_components as dbc
-from dash import Output, Input, State, callback, ALL
+from dash import Output, Input, State, callback
 from dash.exceptions import PreventUpdate
 import plotly.graph_objects as go
 import plotly.express as px
@@ -18,14 +18,9 @@ from pathlib import Path
 # Initialize Dash app with Bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# Determine the data directory path
-current_file = Path(__file__).resolve()
-project_root = current_file.parent
-data_dir = project_root / 'data'
-
 # Load data
-poverty_data = pd.read_csv(data_dir / 'PovStatsData.csv')
-poverty = pd.read_csv(data_dir / 'poverty.csv', low_memory=False)
+poverty_data = pd.read_csv('../data/PovStatsData.csv')
+poverty = pd.read_csv('../data/poverty.csv', low_memory=False)
 
 # Define regions to exclude
 regions = ['East Asia & Pacific', 'Europe & Central Asia',
@@ -329,7 +324,7 @@ app.layout = dbc.Container([
 @app.callback(
     Output('prediction-output', 'children'),
     Input('predict-button', 'n_clicks'),
-    [State({'type': 'feature-input', 'index': ALL}, 'value')],
+    [State({'type': 'feature-input', 'index': dcc.ALL}, 'value')],
     prevent_initial_call=True
 )
 def make_prediction(n_clicks, input_values):
@@ -370,4 +365,4 @@ def make_prediction(n_clicks, input_values):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=True)
